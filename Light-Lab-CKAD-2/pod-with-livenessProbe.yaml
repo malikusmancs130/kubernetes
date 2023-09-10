@@ -1,0 +1,59 @@
+# We have deployed a few pods in this cluster in various namespaces. Inspect them 
+# and identify the pod which is not in a Ready state. Troubleshoot and fix the issue.
+# Next, add a check to restart the container on the same pod if the 
+# command ls /var/www/html/file_check fails. This check should start after a delay of 
+# 10 seconds and run every 60 seconds. 
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+  creationTimestamp: "2023-09-09T16:42:23Z"
+  labels:
+    run: nginx
+  name: nginx1401
+  namespace: dev1401
+  resourceVersion: "2850"
+  uid: 81e8ed2e-7afc-43ea-b39b-0ae61d2f6989
+spec:
+  containers:
+  - image: kodekloud/nginx
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 9080
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /
+        port: 9080
+        scheme: HTTP
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    livenessProbe:
+      exec:
+        command:
+        - ls
+        - /var/www/html/file_check
+      initialDelaySeconds: 10
+      periodSeconds: 60
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-wh6z9
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: node01
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: OnFailure
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30

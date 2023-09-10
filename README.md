@@ -35,3 +35,16 @@ imperative commands:
      k edit pod pod-name 
      k edit deployment deployment-name
      k edit service service-name 
+    
+
+12. Once file is edit and changes are being save. now apply changes to update
+     K replace --force -f q1.yaml 
+
+13. Undo Rolling update deployment
+     k rollout undo deployment nginx-deploy
+
+14. Check networking working fine between pods and svc
+     k exec -it webapp-color -- sh
+     /opt # nc -v -z -w 2 secure-service 80
+
+15.  
