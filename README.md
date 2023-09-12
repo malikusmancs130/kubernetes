@@ -9,8 +9,9 @@ imperative commands:
 3. create pod:
      k run nginx1401 --image=nginx --namespace=default --dry-run=client -oyaml>q6.yaml
 
-4. create pod 
-     k run nginx-448839 --image nginx:alpine
+4. create pod with labels
+     k run nginx-448839 --image nginx:alpine 
+     k run messaging --image redis:alpine --labels=tier=msg
 
 5. create NameSpace
      k create ns apx-z993845
@@ -47,4 +48,16 @@ imperative commands:
      k exec -it webapp-color -- sh
      /opt # nc -v -z -w 2 secure-service 80
 
-15.  
+15. JSON Path
+    1- k get nodes -o=jsonpath='{.items.[*].metadata.name}'
+    2- k get nodes -o=jsonpath='{/item.[*].status.nodeInfo.architecture}'
+    3- k get nodes -o=jsonpath='{/item.[*].status.nodeInfo.capacity.cpu}'
+
+    4- k get nodes -o=json='{/item.[*].status.nodeInfo.architecture} {/item.[*].status.nodeInfo.capacity.cpu}'
+    5- k get nodes -o json -- this will output nodes as a print format into json structure.
+    6- k get nodes -o jsonpath='{.items[*].status.nodeInfo.osImage}' > /opt/outputs/nodes_os_abc.txt
+
+16. kubectl get nodes -o json > /opt/outputs/nodes-z3444kd9.json
+
+17. Static pod
+     mv pod-name.yaml> /etc/kubernetes/manifest/
