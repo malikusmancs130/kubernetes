@@ -48,7 +48,7 @@ imperative commands:
      k exec -it webapp-color -- sh
      /opt # nc -v -z -w 2 secure-service 80
 
-15. JSON Path
+15. Print JSON path and save it in file:
     1- k get nodes -o=jsonpath='{.items.[*].metadata.name}'
     2- k get nodes -o=jsonpath='{/item.[*].status.nodeInfo.architecture}'
     3- k get nodes -o=jsonpath='{/item.[*].status.nodeInfo.capacity.cpu}'
@@ -57,7 +57,21 @@ imperative commands:
     5- k get nodes -o json -- this will output nodes as a print format into json structure.
     6- k get nodes -o jsonpath='{.items[*].status.nodeInfo.osImage}' > /opt/outputs/nodes_os_abc.txt
 
-16. kubectl get nodes -o json > /opt/outputs/nodes-z3444kd9.json
+16. Print JSON path and save it in file:
+     kubectl get nodes -o json > /opt/outputs/nodes-z3444kd9.json
 
 17. Static pod
      mv pod-name.yaml> /etc/kubernetes/manifest/
+
+18. set context - change context
+     kubectl config set-context CONTEXT_NAME --cluster=CLUSTER_NAME --user=USER_NAME --namespace=NAMESPACE
+
+--------------
+
+Tips:
+
+kubectl alias k
+export do=" --dry-run=client -oyaml" --> generate yaml output from command   
+export cf="create -f" --> create new file
+export rf="replace --force -f" --> delete and recreate from file
+
